@@ -1,23 +1,35 @@
 pipeline {
     agent any
-
+    
     stages {
-        stage('Clone Repository') {
+        
+        stage('Checkout Repository') {
             steps {
-                git 'https://github.com/mishashah1/docker-web-project.git'
+                git branch: 'main', url: 'https://github.com/mishashah1/docker-web-project.git'
             }
         }
-
+        
         stage('Build Docker Image') {
             steps {
                 sh 'docker build -t mywebimage .'
             }
         }
-
-        stage('Run Docker Container') {
+        
+        stage('Run Container') {
             steps {
-                sh 'docker run -d -p 8085:80 --name webcontainer mywebimage || echo "Container already running"'
+                sh 'docker run -d -p 8080:80 --name mywebcontainer mywebimage'
             }
+        }
+        
+    }
+    
+    post {
+        always {
+            sh 'docker ps -a'
+        }
+        cleanup {
+            sh 'docker stop mywebcontainer || true'
+            sh 'docker rm mywebcontainer || true'
         }
     }
 }
