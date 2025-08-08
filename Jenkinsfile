@@ -6,7 +6,7 @@ pipeline {
         CONTAINER_NAME = "mywebcontainer"
         HOST_PORT = "8082"
         CONTAINER_PORT = "80"
-        GIT_REPO = "https://github.com/your-username/your-repo.git" // change this
+        GIT_REPO = "https://github.com/mishashah1/docker-web-project.git"
     }
 
     stages {
